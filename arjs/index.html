@@ -2,70 +2,65 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>VR Сатурн</title>
-  <!-- Використовуємо jsDelivr як надійне дзеркало -->
-  <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe-master.min.js"></script>    
+  <title>AR Сатурн (AR.js)</title>
+  <script src="https://cdn.jsdelivr.net/npm/aframe"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js/aframe/build/aframe-ar.min.js"></script> 
 </head>
 <body>
 
-  <!-- Основна сцена -->
-  <a-scene background="color: black">
+  <!-- Вказуємо тип AR: по маркеру -->
+  <a-scene
+    embedded
+    vr-mode-ui="enabled: false"
+    arjs="sourceType: webcam; debugUIEnabled: false;"
+  >
 
-    <!-- Нічне небо -->
-    <a-sky src="assets/textures/night_sky.jpg" rotation="0 -90 0"></a-sky>
+    <!-- Маркер -->
+    <a-marker preset="hiro">
+      <a-entity position="0 0 0">
 
-    <!-- Камера -->
-    <a-entity position="0 2 0">
-      <a-camera look-controls wasd-controls position="0 0 0"></a-camera>
-    </a-entity>
+        <!-- Група Сатурна -->
+        <a-entity id="saturn" rotation="-27 120 0">
 
-    <!-- Джерела світла -->
-    <a-entity light="type: point; intensity: 1; distance: 50" position="0 0 0"></a-entity>
-    <a-entity light="type: ambient; intensity: 0.2"></a-entity>
+          <!-- Обертання -->
+          <a-entity id="rotating-group" animation__rotation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
 
-    <!-- Джерело світла -->
-    <a-entity
-      light="type: directional; intensity: 0.2; castShadow: true"
-      position="0 0 0" 
-      look-at="[camera]"
-    ></a-entity>
+            <!-- Сфера Сатурна -->
+            <a-sphere
+              radius="2"
+              src="#saturnTexture"
+              metalness="0.2"
+              roughness="0.9"
+              shadow="receive: true"
+            ></a-sphere>
 
-    <!-- Сатурн з обертанням і тінню -->
-    <a-entity id="saturn" position="0 0 -10" rotation="-27 120 0">
-
-      <!-- Група для обертання навколо осі -->
-      <a-entity id="rotating-group" animation__rotation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
-
-        <!-- Сфера Сатурна -->
-        <a-sphere
-          radius="2"
-          src="#saturnTexture"
-          metalness="0.2" 
-          roughness="0.9" 
-          shadow="receive: true"
-        ></a-sphere>
-
-        <!-- Кільце -->
-        <a-ring
-          radius-inner="2.5"
-          radius-outer="4.5"
-          segments-theta="256"
-          rotation="-90 0 0"
-          src="#saturnRingsTexture"
-          transparent="false"
-          side="double"
-          alphaTest="0.5"
-          shadow="cast: true"
-        ></a-ring>
+            <!-- Кільце -->
+            <a-ring
+              radius-inner="2.5"
+              radius-outer="4.5"
+              segments-theta="256"
+              rotation="-90 0 0"
+              src="#saturnRingsTexture"
+              transparent="false"
+              side="double"
+              alphaTest="0.5"
+              shadow="cast: true"
+            ></a-ring>
+          </a-entity>
+        </a-entity>
       </a-entity>
-    </a-entity>
+    </a-marker>
 
     <!-- Текстури -->
     <a-assets>
       <img id="saturnTexture" src="assets/textures/saturn.jpg">
       <img id="saturnRingsTexture" src="assets/textures/rings.jpg">
-      <img id="nightSkyTexture" src="assets/textures/night_sky.jpg">
     </a-assets>
+
+    <!-- Підказка користувачеві -->
+    <div style="position: absolute; top: 10px; width: 100%; text-align: center; color: white;">
+      Орієнтуй камеру на маркер "hiro"
+    </div>
   </a-scene>
 </body>
 </html>
