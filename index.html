@@ -11,19 +11,19 @@
   <a-scene background="color: black">
 
     <!-- Нічне небо -->
-    <a-sky src="textures/night_sky.jpg" rotation="0 -90 0"></a-sky>
+    <a-sky src="assets/textures/night_sky.jpg" rotation="0 -90 0"></a-sky>
 
     <!-- Камера -->
-    <a-entity position="0 2 20">
-      <a-camera wasd-controls-enabled="true" look-controls="pointerLockEnabled: true"></a-camera>
+    <a-entity position="0 2 0">
+      <a-camera look-controls wasd-controls position="0 0 0"></a-camera>
     </a-entity>
 
     <!-- Джерело світла (Сонце) -->
-    <a-entity light="type: point; intensity: 2; distance: 1000" position="0 0 0"></a-entity>
+    <a-entity light="type: point; intensity: 5; distance: 50" position="0 0 0"></a-entity>
     <a-entity light="type: ambient; intensity: 0.3"></a-entity>
 
     <!-- Сатурн -->
-    <a-entity id="saturn" position="10 0 0" rotation="-27 0 0">
+    <a-entity id="saturn" position="0 0 -10" rotation="-27 0 0">
       <!-- Сфера Сатурна -->
       <a-sphere
         radius="2"
@@ -43,7 +43,7 @@
         opacity="0.7"
       ></a-ring>
 
-      <!-- Анімація обертання навколо своєї осі -->
+      <!-- Анімація обертання -->
       <a-animation
         attribute="rotation"
         dur="10000"
@@ -54,9 +54,9 @@
 
     <!-- Текстури -->
     <a-assets>
-      <img id="saturnTexture" src="textures/saturn.jpg">
-      <img id="saturnRingsTexture" src="textures/saturn_rings.png">
-      <img id="nightSkyTexture" src="textures/night_sky.jpg">
+      <img id="saturnTexture" src="assets/textures/saturn.jpg">
+      <img id="saturnRingsTexture" src="assets/textures/rings.jpg">
+      <img id="nightSkyTexture" src="assets/textures/night_sky.jpg">
     </a-assets>
   </a-scene>
 </body>
