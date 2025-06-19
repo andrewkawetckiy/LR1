@@ -1,3 +1,5 @@
+// main.js
+
 // Імпортуємо THREE та OrbitControls через CDN
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js'; 
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js'; 
@@ -25,7 +27,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 // Текстури
 const textureLoader = new THREE.TextureLoader();
 const textureSaturn = textureLoader.load('assets/textures/saturn.jpg');
-const textureRings = textureLoader.load('assets/textures/rings.jpg'); 
+const textureRings = textureLoader.load('assets/textures/rings.jpg'); // Тепер .jpg
 
 // Сатурн (сфера)
 const geometrySaturn = new THREE.SphereGeometry(60000, 64, 64);
