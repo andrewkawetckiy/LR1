@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>AR Сатурн (AR.js)</title>
-  <script src="https://cdn.jsdelivr.net/npm/aframe"></script>    
-  <script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js/aframe/build/aframe-ar.min.js"></script>    
+  <script src="https://cdn.jsdelivr.net/npm/aframe"></script>       
+  <script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js/aframe/build/aframe-ar.min.js"></script>       
 </head>
 <body>
 
@@ -17,10 +17,10 @@
 
     <!-- Маркер -->
     <a-marker preset="hiro">
-      <a-entity position="0 0 2"> <!-- Збільшуємо відстань до 2 -->
+      <a-entity position="0 0 5"> <!-- Збільшуємо відстань до 5 -->
 
         <!-- Група Сатурна -->
-        <a-entity id="saturn" rotation="-27 120 0" scale="3 3 3"> <!-- Збільшуємо масштаб у 5 разів -->
+        <a-entity id="saturn" rotation="-27 120 0" scale="3 3 3"> <!-- Збільшуємо масштаб у 3 рази -->
 
           <!-- Обертання -->
           <a-entity id="rotating-group" animation__rotation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
