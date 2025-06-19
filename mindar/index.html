@@ -1,78 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MindAR - Debug</title>
-
-  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script> 
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image-aframe.prod.js"></script> 
-
-  <style>
-    body { margin: 0; background: black; color: white; text-align: center; }
-    #startBtn {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 15px 30px;
-      font-size: 1.2em;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      border: 2px solid white;
-      border-radius: 10px;
-    }
-  </style>
+  <meta charset="utf-8">
+  <title>Тест AR з маркером A (MindAR)</title>
+  <script src="https://cdn.jsdelivr.net/npm/aframe@1.2.0/dist/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image-aframe.js"></script> 
 </head>
-<body>
-  <button id="startBtn">Почати AR</button>
+<body style="margin: 0; overflow: hidden;">
 
-  <a-scene 
-    mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/examples/image-tracking/assets/targets.mind;  autoStart: false;"
+  <a-scene
+    mindar-image="imageTargetSrc: assets/targets/your-target-image.mind; showStatistics: false; uiLoading: no; uiError: no; uiScanning: no;"
     embedded
     vr-mode-ui="enabled: false"
-    device-orientation-permission-ui="enabled: true"
-    webxr="requiredFeatures: camera-access;"
+    color-space="sRGB" 
+    renderer="colorManagement: true, physicallyCorrectLights: true"
   >
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- Об'єкт над маркером -->
+    <a-assets>
+      <img id="saturnTexture" src="assets/textures/saturn.jpg">
+      <img id="saturnRingsTexture" src="assets/textures/rings.jpg">
+    </a-assets>
+
     <a-entity mindar-image-target="targetIndex: 0">
-      <a-sphere color="red" radius="0.5"></a-sphere>
+      <a-entity id="saturn" rotation="-27 120 0" scale="0.4 0.4 0.4" position="0 0 0">
+
+        <a-entity id="rotating-group"
+                  animation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
+
+          <a-sphere
+            radius="0.4"
+            src="#saturnTexture"
+            metalness="0.2"
+            roughness="0.9"
+            shadow="receive: true"
+          ></a-sphere>
+
+          <a-ring
+            radius-inner="0.55"
+            radius-outer="0.8"
+            segments-theta="256"
+            rotation="-90 0 0"
+            src="#saturnRingsTexture"
+            transparent="false"
+            side="double"
+            alphaTest="0.5"
+            shadow="cast: true"
+          ></a-ring>
+        </a-entity>
+      </a-entity>
     </a-entity>
-  </a-scene>
 
-  <script>
-    const startBtn = document.getElementById('startBtn');
-    const scene = document.querySelector('a-scene');
-
-    // Логування стану MindAR
-    document.addEventListener('mindar-image-status', (e) => {
-      console.log("MindAR Стан:", e.detail.status);
-    });
-
-    // Подія при знаходженні маркера
-    document.addEventListener('mindar-image-targetfound', () => {
-      console.log("Маркер знайдено!");
-    });
-
-    document.addEventListener('mindar-image-targetlost', () => {
-      console.log("Маркер втрачено.");
-    });
-
-    startBtn.addEventListener('click', () => {
-      startBtn.style.display = 'none';
-
-      const arSystem = scene.systems['mindar-image'];
-      if (arSystem && !arSystem.started) {
-        console.log("Спроба запустити MindAR...");
-        arSystem.start().then(() => {
-          console.log("MindAR запущено");
-        }).catch((e) => {
-          console.error("Помилка запуску MindAR:", e);
-          alert("Помилка запуску AR. Дивись консоль.");
-        });
-      }
-    });
-  </script>
+    </a-scene>
 </body>
 </html>
