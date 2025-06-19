@@ -2,88 +2,70 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>MindAR Сатурн</title>
-  <script src="https://cdn.jsdelivr.net/npm/aframe"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  <title>AR Сатурн (MindAR)</title>
+
+  <!-- Підключення A-Frame -->
+  <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe.min.js"></script>
+
+  <!-- Підключення MindAR -->
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.4/dist/aframe/mindar-image-aframe.prod.js"></script>
+
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: black;
-    }
-    a-scene {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1;
-    }
-    #instruction {
-      position: absolute;
-      top: 10px;
-      width: 100%;
-      text-align: center;
-      color: white;
-      z-index: 10;
-      font-family: sans-serif;
-    }
+    body { margin: 0; overflow: hidden; }
+    canvas { position: absolute; top: 0; left: 0; }
   </style>
 </head>
 <body>
+  <a-scene
+    mindar-image="imageTargetSrc: targets.mind"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: true"
+    embedded
+  >
 
-  <div id="instruction">Орієнтуй камеру на маркер</div>
+    <!-- Камера -->
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-  <a-scene mindar-image="imageTargetSrc: assets/targets.mind; autoStart: true"
-           color-space="sRGB"
-           embedded
-           renderer="colorManagement: true, physicallyCorrectLights: true">
+    <!-- Мішень (перша) -->
+    <a-entity mindar-image-target="targetIndex: 0">
+      <a-entity position="0 0 0">
 
+        <!-- Сатурн -->
+        <a-entity id="saturn" rotation="-27 120 0" scale="0.5 0.5 0.5">
+
+          <a-entity id="rotating-group"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
+
+            <a-sphere
+              radius="0.5"
+              src="#saturnTexture"
+              metalness="0.2"
+              roughness="0.9"
+              shadow="receive: true"
+            ></a-sphere>
+
+            <a-ring
+              radius-inner="0.65"
+              radius-outer="1.15"
+              segments-theta="256"
+              rotation="-90 0 0"
+              src="#saturnRingsTexture"
+              side="double"
+              alphaTest="0.5"
+              shadow="cast: true"
+            ></a-ring>
+
+          </a-entity>
+        </a-entity>
+      </a-entity>
+    </a-entity>
+
+    <!-- Текстури -->
     <a-assets>
       <img id="saturnTexture" src="assets/textures/saturn.jpg">
       <img id="saturnRingsTexture" src="assets/textures/rings.jpg">
     </a-assets>
 
-    <a-camera position="0 0 0" look-controls></a-camera>
-
-    <a-entity light="type: ambient; intensity: 0.5"></a-entity>
-    <a-entity light="type: directional; intensity: 0.5; castShadow: true" position="10 10 10" look-at="[camera]"></a-entity>
-
-    <a-entity mindar-image-target="targetIndex: 0">
-      <a-entity position="0 0 0">
-        <a-entity id="saturn" position="0 0 0" rotation="-27 120 0" scale="0.5 0.5 0.5">
-          <a-entity id="rotating-group" animation__rotation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
-            <a-sphere radius="1" src="#saturnTexture" metalness="0.2" roughness="0.9" shadow="receive: true"></a-sphere>
-            <a-ring radius-inner="1.25" radius-outer="2.25" segments-theta="256" rotation="-90 0 0"
-                    src="#saturnRingsTexture" transparent="false" side="double" alphaTest="0.5" shadow="cast: true"></a-ring>
-          </a-entity>
-        </a-entity>
-      </a-entity>
-    </a-entity>
   </a-scene>
-
-  <!-- iOS permission fix -->
-  <script>
-    if (typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function") {
-      DeviceOrientationEvent.requestPermission().catch(() => {
-        const button = document.createElement('button');
-        button.innerText = "Натисни, щоб активувати";
-        button.style.position = 'absolute';
-        button.style.top = '50%';
-        button.style.left = '50%';
-        button.style.transform = 'translate(-50%, -50%)';
-        button.style.padding = '1em';
-        button.style.zIndex = 20;
-        button.onclick = () => {
-          DeviceOrientationEvent.requestPermission().then(() => {
-            button.remove();
-          });
-        };
-        document.body.appendChild(button);
-      });
-    }
-  </script>
-
 </body>
 </html>
