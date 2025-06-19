@@ -17,17 +17,17 @@
 
     <!-- Маркер -->
     <a-marker preset="hiro">
-      <a-entity position="0 0 1"> <!-- Збільшуємо відстань -->
+      <a-entity position="0 0 2"> <!-- Збільшуємо відстань до 2 -->
 
         <!-- Група Сатурна -->
-        <a-entity id="saturn" rotation="-27 120 0">
+        <a-entity id="saturn" rotation="-27 120 0" scale="5 5 5"> <!-- Збільшуємо масштаб у 5 разів -->
 
           <!-- Обертання -->
           <a-entity id="rotating-group" animation__rotation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
 
             <!-- Сфера Сатурна -->
             <a-sphere
-              radius="0.5" <!-- Збільшуємо радіус -->
+              radius="0.5"
               src="#saturnTexture"
               metalness="0.2"
               roughness="0.9"
@@ -36,8 +36,8 @@
 
             <!-- Кільце -->
             <a-ring
-              radius-inner="0.65" <!-- Збільшуємо внутрішній радіус -->
-              radius-outer="1.15" <!-- Збільшуємо зовнішній радіус -->
+              radius-inner="0.65"
+              radius-outer="1.15"
               segments-theta="256"
               rotation="-90 0 0"
               src="#saturnRingsTexture"
