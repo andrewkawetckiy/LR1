@@ -3,20 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MindAR - 1 Marker</title>
+  <title>MindAR - Debug</title>
 
-  <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script> 
-
-  <!-- MindAR -->
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image-aframe.prod.js"></script> 
-  
+
   <style>
-    body { margin: 0; background: black; }
+    body { margin: 0; background: black; color: white; text-align: center; }
     #startBtn {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       padding: 15px 30px;
       font-size: 1.2em;
@@ -24,7 +20,6 @@
       color: white;
       border: 2px solid white;
       border-radius: 10px;
-      z-index: 1000;
     }
   </style>
 </head>
@@ -32,14 +27,15 @@
   <button id="startBtn">Почати AR</button>
 
   <a-scene 
-    mindar-image="imageTargetSrc: targets.mind; autoStart: false;"
+    mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/examples/image-tracking/assets/targets.mind;  autoStart: false;"
     embedded
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: true"
+    webxr="requiredFeatures: camera-access;"
   >
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- Об'єкт, який буде показуватися над маркером -->
+    <!-- Об'єкт над маркером -->
     <a-entity mindar-image-target="targetIndex: 0">
       <a-sphere color="red" radius="0.5"></a-sphere>
     </a-entity>
@@ -49,14 +45,31 @@
     const startBtn = document.getElementById('startBtn');
     const scene = document.querySelector('a-scene');
 
+    // Логування стану MindAR
+    document.addEventListener('mindar-image-status', (e) => {
+      console.log("MindAR Стан:", e.detail.status);
+    });
+
+    // Подія при знаходженні маркера
+    document.addEventListener('mindar-image-targetfound', () => {
+      console.log("Маркер знайдено!");
+    });
+
+    document.addEventListener('mindar-image-targetlost', () => {
+      console.log("Маркер втрачено.");
+    });
+
     startBtn.addEventListener('click', () => {
       startBtn.style.display = 'none';
 
       const arSystem = scene.systems['mindar-image'];
       if (arSystem && !arSystem.started) {
-        arSystem.start().catch((e) => {
-          console.error("Не вдалося запустити MindAR:", e);
-          alert("Помилка запуску AR. Подивись консоль браузера.");
+        console.log("Спроба запустити MindAR...");
+        arSystem.start().then(() => {
+          console.log("MindAR запущено");
+        }).catch((e) => {
+          console.error("Помилка запуску MindAR:", e);
+          alert("Помилка запуску AR. Дивись консоль.");
         });
       }
     });
