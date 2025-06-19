@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Test Custom Marker</title>
-    <script src="https://cdn.jsdelivr.net/npm/aframe"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js/aframe/build/aframe-ar.min.js"></script>
-  </head>
-  <body style="margin: 0; overflow: hidden;">
-    <a-scene
-      embedded
-      vr-mode-ui="enabled: false"
-      arjs="sourceType: webcam; debugUIEnabled: false;"
-    >
-      <!-- Замість hiro — власний маркер -->
-      <a-marker type="pattern" url="pattern-A.patt">
-        <a-box position="0 0.5 0" material="color: yellow;"></a-box>
-      </a-marker>
+<head>
+  <meta charset="utf-8">
+  <title>Тест AR з маркером A</title>
+  <script src="https://cdn.jsdelivr.net/npm/aframe"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js/aframe/build/aframe-ar.min.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
 
-      <a-entity camera></a-entity>
-    </a-scene>
-  </body>
+  <a-scene
+    embedded
+    vr-mode-ui="enabled: false"
+    arjs="sourceType: webcam; debugUIEnabled: false"
+  >
+
+    <!-- Використовуємо надійний маркер A -->
+    <a-marker type="pattern" url="pattern-A.patt">
+      <a-box position="0 0.5 0" material="color: red;"></a-box>
+    </a-marker>
+
+    <a-entity camera></a-entity>
+
+  </a-scene>
+</body>
 </html>
