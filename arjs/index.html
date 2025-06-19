@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>AR Сатурн (AR.js)</title>
-  <script src="https://cdn.jsdelivr.net/npm/aframe"></script> 
-  <script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js/aframe/build/aframe-ar.min.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/aframe"></script>    
+  <script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js/aframe/build/aframe-ar.min.js"></script>    
 </head>
 <body>
 
@@ -17,7 +17,7 @@
 
     <!-- Маркер -->
     <a-marker preset="hiro">
-      <a-entity position="0 0 0">
+      <a-entity position="0 0 1"> <!-- Збільшуємо відстань -->
 
         <!-- Група Сатурна -->
         <a-entity id="saturn" rotation="-27 120 0">
@@ -27,7 +27,7 @@
 
             <!-- Сфера Сатурна -->
             <a-sphere
-              radius="0.05"
+              radius="0.5" <!-- Збільшуємо радіус -->
               src="#saturnTexture"
               metalness="0.2"
               roughness="0.9"
@@ -36,8 +36,8 @@
 
             <!-- Кільце -->
             <a-ring
-              radius-inner="0.065"
-              radius-outer="0.115"
+              radius-inner="0.65" <!-- Збільшуємо внутрішній радіус -->
+              radius-outer="1.15" <!-- Збільшуємо зовнішній радіус -->
               segments-theta="256"
               rotation="-90 0 0"
               src="#saturnRingsTexture"
