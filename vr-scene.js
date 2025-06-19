@@ -21,7 +21,7 @@ const controls = new THREE.OrbitControls(camera, renderer.domElement);
 // Текстури
 const textureLoader = new THREE.TextureLoader();
 const textureSaturn = textureLoader.load('assets/textures/saturn.jpg');
-const textureRings = textureLoader.load('assets/textures/rings.png');
+const textureRings = textureLoader.load('assets/textures/rings.jpg');
 
 // Сатурн (сфера)
 const geometrySaturn = new THREE.SphereGeometry(60000, 64, 64); // segmentsWidth & segmentsHeight
