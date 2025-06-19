@@ -1,58 +1,67 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>AR Сатурн</title>
-    <!-- A-Frame -->
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <!-- AR.js -->
-    <script src="https://cdn.jsdelivr.net/npm/ar.js@3.4.2/aframe/build/aframe-ar.min.js"></script>
-  </head>
-  <body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs>
-      
-      <!-- Освітлення -->
-      <a-entity light="type: ambient; intensity: 0.5;"></a-entity>
-      <a-entity light="type: directional; intensity: 0.8;" position="1 1 0"></a-entity>
+<head>
+  <meta charset="utf-8">
+  <title>AR Сатурн (AR.js)</title>
+  <script src="https://cdn.jsdelivr.net/npm/aframe"></script>       
+  <script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js/aframe/build/aframe-ar.min.js"></script>       
+</head>
+<body style="margin: 0; overflow: hidden;">
 
-      <!-- Маркер (наприклад Hiro-маркер) -->
-      <a-marker preset="hiro">
-        
-        <!-- Група з обертанням -->
-        <a-entity id="rotating-group" animation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
+  <a-scene
+    embedded
+    vr-mode-ui="enabled: false"
+    arjs="sourceType: webcam; debugUIEnabled: false;"
+  >
+
+    <!-- Маркер Hiro -->
+    <a-marker preset="hiro">
+
+      <!-- Група Сатурна -->
+      <a-entity id="saturn" rotation="-27 120 0" scale="0.4 0.4 0.4" position="0 0 0">
+
+        <!-- Обертання -->
+        <a-entity id="rotating-group"
+                  animation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
 
           <!-- Сфера Сатурна -->
           <a-sphere
-            radius="0.5"
+            radius="0.4"
             src="#saturnTexture"
             metalness="0.2"
             roughness="0.9"
             shadow="receive: true"
           ></a-sphere>
 
-          <!-- Кільця -->
+          <!-- Кільце -->
           <a-ring
-            radius-inner="0.65"
-            radius-outer="1.1"
+            radius-inner="0.55"
+            radius-outer="0.8"
             segments-theta="256"
             rotation="-90 0 0"
             src="#saturnRingsTexture"
+            transparent="false"
             side="double"
-            shadow="cast: true"
             alphaTest="0.5"
+            shadow="cast: true"
           ></a-ring>
         </a-entity>
-      </a-marker>
+      </a-entity>
+    </a-marker>
 
-      <!-- Камера -->
-      <a-entity camera></a-entity>
+    <!-- Камера -->
+    <a-entity camera></a-entity>
 
-      <!-- Текстури -->
-      <a-assets>
-        <img id="saturnTexture" src="assets/textures/saturn.jpg">
-        <img id="saturnRingsTexture" src="assets/textures/rings.jpg">
-      </a-assets>
+    <!-- Текстури -->
+    <a-assets>
+      <img id="saturnTexture" src="assets/textures/saturn.jpg">
+      <img id="saturnRingsTexture" src="assets/textures/rings.jpg">
+    </a-assets>
 
-    </a-scene>
-  </body>
+    <!-- Підказка користувачеві -->
+    <div style="position: absolute; top: 10px; width: 100%; text-align: center; color: white;">
+      Орієнтуй камеру на маркер "hiro"
+    </div>
+  </a-scene>
+</body>
 </html>
