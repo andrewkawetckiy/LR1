@@ -3,10 +3,22 @@
 <head>
   <meta charset="utf-8">
   <title>Тест AR з маркером A (MindAR)</title>
-  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image-aframe.prod.js"></script>
+
+  <!-- A-Frame -->
+  <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe.min.js"></script> 
+
+  <!-- MindAR -->
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image-aframe.prod.js"></script> 
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+    }
+  </style>
 </head>
-<body style="margin: 0; overflow: hidden;">
+<body>
 
   <a-scene
     mindar-image="imageTargetSrc: targets.mind; showStatistics: false; uiLoading: no; uiError: no; uiScanning: yes;"
@@ -14,7 +26,9 @@
     vr-mode-ui="enabled: false"
     color-space="sRGB"
     renderer="colorManagement: true, physicallyCorrectLights: true"
-  ></a-scene>
+  >
+
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
     <a-assets>
       <img id="saturnTexture" src="assets/textures/saturn.jpg">
@@ -50,6 +64,7 @@
       </a-entity>
     </a-entity>
 
-    </a-scene>
+  </a-scene>
+
 </body>
 </html>
