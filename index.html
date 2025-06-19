@@ -31,7 +31,7 @@
     ></a-entity>
 
     <!-- Сатурн з обертанням і тінню -->
-    <a-entity id="saturn" position="0 0 -10" rotation="-27 0 0">
+    <a-entity id="saturn" position="0 0 -10" rotation="-27 120 0">
 
       <!-- Група для обертання навколо осі -->
       <a-entity id="rotating-group" animation__rotation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
@@ -52,8 +52,7 @@
           segments-theta="256"
           rotation="-90 0 0"
           src="#saturnRingsTexture"
-          transparent="true"
-          opacity="0.7"
+          transparent="false"
           side="double"
           alphaTest="0.5"
           shadow="cast: true"
