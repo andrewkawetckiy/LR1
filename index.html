@@ -23,37 +23,40 @@
     <a-entity light="type: point; intensity: 5; distance: 50" position="0 0 0"></a-entity>
     <a-entity light="type: ambient; intensity: 0.3"></a-entity>
 
-    <!-- Сатурн -->
-    <a-entity id="saturn" position="0 0 -10" rotation="-27 0 0">
-      <!-- Сфера Сатурна -->
-      <a-sphere
-        radius="2"
-        src="#saturnTexture"
-        metalness="0.5"
-        roughness="0.8"
-      ></a-sphere>
+    <!-- Джерело світла -->
+<a-entity
+  light="type: directional; intensity: 1; castShadow: true"
+  position="10 10 10"
+  look-at="[camera]"
+></a-entity>
 
-      <!-- Кільця -->
-      <a-ring
-        radius-inner="2.5"
-        radius-outer="4.5"
-        segments-theta="256"
-        rotation="-90 0 0"
-        src="#saturnRingsTexture"
-        transparent="true"
-        opacity="0.95"
-        side="double"
-        alphaTest="0.5"
-      ></a-ring>
+<!-- Сатурн з обертанням і тінню -->
+<a-entity id="saturn" position="0 0 -10" rotation="-27 0 0"
+          animation__rotation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
 
-      <!-- Анімація обертання -->
-      <a-animation
-        attribute="rotation"
-        dur="10000"
-        to="0 360 0"
-        repeat="indefinite"
-      ></a-animation>
-    </a-entity>
+  <!-- Сфера Сатурна -->
+  <a-sphere
+    radius="2"
+    src="#saturnTexture"
+    metalness="0.5"
+    roughness="0.8"
+    shadow="receive: true"
+  ></a-sphere>
+
+  <!-- Кільця -->
+  <a-ring
+    radius-inner="2.5"
+    radius-outer="4.5"
+    segments-theta="256"
+    rotation="-90 0 0"
+    src="#saturnRingsTexture"
+    transparent="true"
+    opacity="0.7"
+    side="double"
+    alphaTest="0.5"
+    shadow="cast: true"
+  ></a-ring>
+</a-entity>
 
     <!-- Текстури -->
     <a-assets>
