@@ -2,16 +2,20 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>MindAR + Saturn</title>
+    <title>MindAR + Сатурн</title>
 
     <!-- A-Frame -->
-    <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe.min.js"></script>   
+    <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe.min.js"></script> 
 
     <!-- MindAR -->
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>   
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script> 
 
     <style>
-      body { margin: 0; overflow: hidden; background: black; }
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: black;
+      }
       #loading, #startBtn {
         position: absolute;
         width: 100%;
@@ -40,21 +44,25 @@
     </div>
 
     <a-scene
-      mindar-image="imageTargetSrc: targets.mind; autoStart: false; uiScanning: yes;"
+      mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/examples/image-tracking/assets/targets.mind;  autoStart: false; uiScanning: yes;"
       embedded
       color-space="sRGB"
       renderer="colorManagement: true, physicallyCorrectLights"
       vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: true"
     >
       <a-assets>
-        <img id="saturnTexture" src="assets/saturn.jpg">
-        <img id="saturnRingsTexture" src="assets/rings.jpg">
+        <!-- Текстури Сатурна та кілець -->
+        <img id="saturnTexture" src="https://i.imgur.com/3BdhnzG.jpg"> 
+        <img id="saturnRingsTexture" src="https://i.imgur.com/7kCZVfK.png"> 
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
+      <!-- Об'єкт, який з'явиться над маркером -->
       <a-entity mindar-image-target="targetIndex: 0">
         <a-entity id="saturn" position="0 0 0" rotation="-27 120 0" scale="0.4 0.4 0.4">
+
           <a-entity id="rotating-group"
                     animation__rotation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
 
@@ -86,15 +94,21 @@
 
     <script>
       const startBtn = document.getElementById('startBtn');
-      const scene = document.querySelector('a-scene');
       const loadingDiv = document.getElementById('loading');
+      const scene = document.querySelector('a-scene');
 
       startBtn.addEventListener('click', () => {
         loadingDiv.style.display = 'none';
 
         const arSystem = scene.systems['mindar-image'];
         if (arSystem && !arSystem.started) {
-          arSystem.start(); // Явно запускаємо AR-систему
+          console.log("Спроба запуску MindAR...");
+          arSystem.start().then(() => {
+            console.log("MindAR успішно запущено!");
+          }).catch((e) => {
+            console.error("Не вдалося запустити MindAR:", e);
+            alert("Не вдалося запустити AR. Перевір консоль або спробуй інший браузер.");
+          });
         }
       });
     </script>
